@@ -20,6 +20,18 @@ const injectContext = PassedComponent => {
 					})
 			})
 		);
+		const handleImageUpload = (e) => {
+			const file = e.target.files[0];
+			const reader = new FileReader();
+			reader.onloadend = () => {
+				setContact({ ...contact, image: reader.result });
+			};
+			reader.readAsDataURL(file);
+		};
+		
+		// En el formulario de AddContact
+		<input type="file" onChange={handleImageUpload} />
+		
 
 		useEffect(() => {
 			/**

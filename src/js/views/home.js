@@ -39,8 +39,7 @@ const Home = () => {
                     
                         <ContactCard
                             contact={contact}
-                            onDelete={ handleDelete(contact.id)}
-                            onEdit={() => navigate(`/edit-contact/${contact.id}`)}
+                            
                         />
                     
                 ))}

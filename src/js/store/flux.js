@@ -83,7 +83,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             // Eliminar un contacto
             deleteContact: async (contactId) => {
+                const store = getStore();
                 try {
+
                     const response = await fetch(`https://playground.4geeks.com/contact/agendas/${store.agenda_slug}/contacts/${contactId}`, {
                         method: 'DELETE'
                     });

@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Context } from '../store/appContext';
+import { useContext } from 'react';
 
-const ContactCard = ({ contact, onDelete, onEdit }) => {
+const ContactCard = ({ contact}) => {
+    const { store,actions} = useContext(Context)
     return (
         <div className="card mb-3">
             <div className="row no-gutters">
@@ -15,10 +18,10 @@ const ContactCard = ({ contact, onDelete, onEdit }) => {
                         <p className="card-text"><i className="fas fa-phone"></i> {contact.phone}</p>
                         <p className="card-text"><i className="fas fa-map-marker-alt"></i> {contact.address}</p>
                         <div className="d-flex justify-content-between">
-                            <button className="btn btn-primary" onClick={onEdit}>
+                            <button className="btn btn-primary" onClick={()=>{}}>
                                 <i className="fas fa-edit"></i> Edit
                             </button>
-                            <button className="btn btn-danger" onClick={onDelete}>
+                            <button className="btn btn-danger" onClick={()=> actions.deleteContact(contact.id)}>
                                 <i className="fas fa-trash-alt"></i> Delete
                             </button>
                         </div>

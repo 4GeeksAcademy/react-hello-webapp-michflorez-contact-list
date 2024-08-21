@@ -2,7 +2,8 @@ const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
             contacts: [],
-            agenda_slug: "Michflorez"  // Tu agenda personalizada
+            agenda_slug: "Michflorez",
+            selected_id: null,
         },
         actions: {
             // Obtener todos los contactos
@@ -45,7 +46,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             createAgenda: async () => {
                 try {
                     const store = getStore();
-                   
+
 
                     const response = await fetch(`https://playground.4geeks.com/contact/agendas/${store.agenda_slug}`, {
                         method: 'POST',
@@ -54,7 +55,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     });
 
                     if (response.ok) {
-                       response.json()
+                        response.json()
                     } else {
                         console.error("Failed to create agenda");
                     }
@@ -63,12 +64,18 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
             // Editar un contacto existente
-            updateContact: async (contactId, updatedContact) => {
+            updateContact: async (contactId, name, phone, email, address) => {
+                const store = getStore();
                 try {
                     const response = await fetch(`https://playground.4geeks.com/contact/agendas/${store.agenda_slug}/contacts/${contactId}`, {
                         method: 'PUT',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(updatedContact)
+                        body: JSON.stringify({
+                            name: name,
+                            phone: phone,
+                            email: email,
+                            address: address,
+                        })
                     });
 
                     if (response.ok) {
@@ -100,6 +107,11 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
+            selectedId: (id) => {
+                const store = getStore()
+                setStore({ ...store, selected_id: id })
+            },
+
             // Función para obtener una imagen aleatoria
             fetchImage: async () => {
                 try {
@@ -111,7 +123,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return null;
                 }
             }
-            
+
         }
     };
 };

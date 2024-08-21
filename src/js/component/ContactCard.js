@@ -2,9 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Context } from '../store/appContext';
 import { useContext } from 'react';
+import { useNavigate } from 'react-router';
 
-const ContactCard = ({ contact}) => {
-    const { store,actions} = useContext(Context)
+const ContactCard = ({ contact }) => {
+    const { store, actions } = useContext(Context)
+    const navigate = useNavigate()
+    const handleEdit = (id) => {
+        actions.selectedId(id)
+        navigate('/edit-contact')
+    }
     return (
         <div className="card mb-3">
             <div className="row no-gutters">
@@ -18,10 +24,10 @@ const ContactCard = ({ contact}) => {
                         <p className="card-text"><i className="fas fa-phone"></i> {contact.phone}</p>
                         <p className="card-text"><i className="fas fa-map-marker-alt"></i> {contact.address}</p>
                         <div className="d-flex justify-content-between">
-                            <button className="btn btn-primary" onClick={()=>{}}>
+                            <button className="btn btn-primary" onClick={() => { handleEdit(contact.id)}}>
                                 <i className="fas fa-edit"></i> Edit
                             </button>
-                            <button className="btn btn-danger" onClick={()=> actions.deleteContact(contact.id)}>
+                            <button className="btn btn-danger" onClick={() => actions.deleteContact(contact.id)}>
                                 <i className="fas fa-trash-alt"></i> Delete
                             </button>
                         </div>
